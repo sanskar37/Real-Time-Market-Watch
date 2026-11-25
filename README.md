@@ -1,4 +1,5 @@
 # Market Watch
+Built By: Sanskar
 
 A live stock price table. A NestJS server makes up the prices and sends them to the browser over WebSockets. The React page updates only the cells that change.
 
