@@ -1,0 +1,194 @@
+/*
+ * Design tokens, measured from the reference image (1536 x 1024).
+ * Desktop values are the reference; the media queries below scale the
+ * layout down for tablets and phones without changing the look.
+ */
+:root {
+  /* colour */
+  --color-page: #f7f8fe;
+  --color-card: #ffffff;
+  --color-navy: #1b243f;
+  --color-ink: #0b1236;
+  --color-ink-soft: #2b3a6b;
+  --color-icon-muted: #a0a4c2;
+  --color-accent: #5367f8;
+  --color-line: #eff0f6;
+  --color-head-bg: #f2f2fb;
+  --color-chip: #eeeff9;
+  --color-field-border: #dcdff3;
+  /* Reference hues (#0aa861 / #f2303b), darkened just enough to pass WCAG AA 4.5:1 on white. */
+  --color-positive: #08884f;
+  --color-negative: #ec0f1b;
+  --color-live: #01c175;
+  --color-away: #f5a524;
+  --color-scroll-track: #ecedf4;
+  --color-scroll-thumb: #a5a7b6;
+  --color-on-navy: #ffffff;
+  --color-on-navy-muted: #a7b2ce;
+
+  /* type */
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-title: 32px;
+  --fs-status: 18.4px;
+  --fs-label: 20.5px;
+  --fs-chip: 18.5px;
+  --fs-head: 17.8px;
+  /* 20px: the largest size at which BHARTIARTL and KOTAKBANK fit the reference's 161px column. */
+  --fs-symbol: 20px;
+  --fs-cell: 18.5px;
+  --fs-ltp: 19.5px;
+  --fs-change: 19px;
+
+  /* shape */
+  --radius-card: 20px;
+  --shadow-card: 0 6px 28px rgba(60, 70, 140, 0.1), 0 1px 3px rgba(60, 70, 140, 0.08);
+
+  /* layout */
+  --page-pad-x: 20px;
+  --page-pad-top: 25px;
+  --page-pad-bottom: 40px;
+  --header-h: 88px;
+  --header-pad-x: 36px;
+  --logo-w: 47px;
+  --filter-h: 114px;
+  --filter-pad-x: 29px;
+  --filter-gap: 36px;
+  --field-h: 62px;
+  --field-radius: 18px;
+  --chip-h: 44px;
+  --head-h: 69px;
+  /* 63px rows plus the two-line TCS row (78px) give the reference body height (581px). */
+  --row-min-h: 63px;
+  --row-pad-y: 10px;
+
+  /* table columns: the first three are sticky */
+  --col-symbol: 161px;
+  --col-company: 235px;
+  --col-ltp: 140px;
+  --col-change: 143px;
+  --col-gap: 125px;
+  --col-high: 151px;
+  --col-low: 140px;
+  --col-volume: 125px;
+  --col-high52: 140px;
+  --col-low52: 140px;
+  --pad-first: 29px;
+  --pad-cell: 15px;
+  --scroll-h: 21px;
+  --scroll-inset-left: 29px;
+  --scroll-inset-right: 8px;
+  --table-tail: 17px;
+}
+
+/* Laptops and tablets landscape */
+@media (max-width: 1099px) {
+  :root {
+    --fs-title: 26px;
+    --fs-status: 16px;
+    --fs-label: 18px;
+    --fs-chip: 16px;
+    --fs-head: 16px;
+    --fs-symbol: 17px;
+    --fs-cell: 15.5px;
+    --fs-ltp: 16px;
+    --fs-change: 15.5px;
+    --header-h: 76px;
+    --header-pad-x: 28px;
+    --logo-w: 40px;
+    --filter-h: 96px;
+    --filter-pad-x: 24px;
+    --filter-gap: 24px;
+    --field-h: 54px;
+    --field-radius: 16px;
+    --chip-h: 38px;
+    --head-h: 56px;
+    --row-min-h: 54px;
+    --col-symbol: 138px;
+    --col-company: 186px;
+    --col-ltp: 124px;
+    --col-change: 132px;
+    --col-gap: 72px;
+    --col-high: 128px;
+    --col-low: 124px;
+    --col-volume: 100px;
+    --col-high52: 124px;
+    --col-low52: 124px;
+    --pad-first: 24px;
+    --pad-cell: 13px;
+  }
+}
+
+/* Phones */
+@media (max-width: 639px) {
+  :root {
+    --page-pad-x: 12px;
+    --page-pad-top: 12px;
+    --page-pad-bottom: 24px;
+    --radius-card: 16px;
+    --fs-title: 18px;
+    --fs-status: 12px;
+    --fs-label: 15px;
+    --fs-chip: 13px;
+    --fs-head: 12px;
+    --fs-symbol: 12px;
+    --fs-cell: 12.5px;
+    --fs-ltp: 13px;
+    --fs-change: 12.5px;
+    --header-h: 64px;
+    --header-pad-x: 16px;
+    --logo-w: 28px;
+    --filter-h: auto;
+    --filter-pad-x: 16px;
+    --filter-gap: 10px;
+    --field-h: 46px;
+    --field-radius: 14px;
+    --chip-h: 32px;
+    --head-h: 44px;
+    --row-min-h: 46px;
+    --row-pad-y: 8px;
+    --col-symbol: 94px;
+    --col-company: 92px;
+    --col-ltp: 88px;
+    --col-change: 96px;
+    --col-gap: 24px;
+    --col-high: 96px;
+    --col-low: 92px;
+    --col-volume: 74px;
+    --col-high52: 96px;
+    --col-low52: 96px;
+    --pad-first: 12px;
+    --pad-cell: 10px;
+    --scroll-h: 14px;
+    --scroll-inset-left: 12px;
+    --scroll-inset-right: 6px;
+    --table-tail: 8px;
+  }
+}
+
+/*
+ * Narrow phones (320-400px). The three sticky columns must stay readable
+ * yet leave room to see the scrolling ones: at 320px the Change % column
+ * still shows in full.
+ */
+@media (max-width: 400px) {
+  :root {
+    --page-pad-x: 8px;
+    --page-pad-top: 8px;
+    --fs-head: 11.5px;
+    --fs-symbol: 11.5px;
+    --fs-cell: 11.5px;
+    --fs-ltp: 11.5px;
+    --fs-change: 11.5px;
+    --col-symbol: 88px;
+    --col-company: 64px;
+    --col-ltp: 74px;
+    --col-change: 78px;
+    --col-high: 86px;
+    --col-low: 86px;
+    --col-volume: 64px;
+    --col-high52: 86px;
+    --col-low52: 86px;
+    --pad-first: 10px;
+    --pad-cell: 7px;
+  }
+}

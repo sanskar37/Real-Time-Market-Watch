@@ -1,0 +1,326 @@
+/* Horizontal scroll container. The track is always reserved, as in the reference. */
+.scroller {
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroller:focus-visible {
+  outline-offset: -2px;
+}
+
+.scroller::-webkit-scrollbar {
+  height: var(--scroll-h);
+}
+
+.scroller::-webkit-scrollbar-track {
+  margin: 0 var(--scroll-inset-right) 0 var(--scroll-inset-left);
+  background: var(--color-scroll-track);
+  border-radius: 999px;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  background: var(--color-scroll-thumb);
+  border: 4px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .scroller {
+    scrollbar-color: var(--color-scroll-thumb) var(--color-scroll-track);
+  }
+}
+
+/*
+ * Symbol and LTP use the reference widths unless a longer entry is on screen
+ * (ULTRACEMCO, "₹ 12,450.00"); `useColumnFit` then widens them through these
+ * two variables. The sticky offsets follow from the same variables.
+ */
+.table {
+  --col-symbol-fit: var(--col-symbol);
+  --col-ltp-fit: var(--col-ltp);
+  min-width: calc(
+    var(--col-symbol-fit) + var(--col-company) + var(--col-ltp-fit) + var(--col-change) + var(--col-gap) +
+      var(--col-high) + var(--col-low) + var(--col-volume) + var(--col-high52) + var(--col-low52)
+  );
+}
+
+/*
+ * Each row is its own small grid with the same template, so columns line up
+ * and a price tick re-lays out one row, never the whole table.
+ */
+.row {
+  display: grid;
+  grid-template-columns:
+    var(--col-symbol-fit) var(--col-company) var(--col-ltp-fit)
+    minmax(var(--col-change), 1fr) minmax(var(--col-gap), 1fr) minmax(var(--col-high), 1fr)
+    minmax(var(--col-low), 1fr) minmax(var(--col-volume), 1fr) minmax(var(--col-high52), 1fr)
+    minmax(var(--col-low52), 1fr);
+  min-height: var(--row-min-h);
+  background: var(--color-card);
+  --row-line: var(--color-line);
+}
+
+.headRow {
+  min-height: var(--head-h);
+  background: var(--color-head-bg);
+  --row-line: #e6e8f2;
+}
+
+/*
+ * Row separators are drawn per cell, so they stay correct inside the sticky
+ * block. In the reference the line starts at the symbol text, not the card edge.
+ */
+.row > * {
+  box-shadow: inset 0 -1px 0 var(--row-line);
+}
+
+.row > :first-child {
+  box-shadow: none;
+  background-image: linear-gradient(var(--row-line), var(--row-line));
+  background-repeat: no-repeat;
+  background-position: var(--pad-first) 100%;
+  background-size: 100% 1px;
+}
+
+/* Keeps the column lines running down to the scrollbar, as in the reference. */
+.row.tail {
+  min-height: 0;
+  height: var(--table-tail);
+}
+
+.row.tail > * {
+  padding: 0;
+  box-shadow: none;
+  background-image: none;
+}
+
+.cell,
+.head {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: var(--row-pad-y) var(--pad-cell);
+  border-right: 1px solid var(--color-line);
+  background: inherit;
+  white-space: nowrap;
+}
+
+.cell:last-child,
+.head:last-child {
+  border-right: 0;
+}
+
+.head {
+  font-size: var(--fs-head);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-ink-soft);
+  border-right-color: #e6e8f2;
+}
+
+.cell {
+  font-size: var(--fs-cell);
+  font-weight: 450;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+/* Sticky block: Symbol, Company, LTP */
+.sticky {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.stickyCompany {
+  left: var(--col-symbol-fit);
+}
+
+.stickyLtp {
+  left: calc(var(--col-symbol-fit) + var(--col-company));
+  transition: box-shadow 160ms ease-out;
+}
+
+.scroller[data-scrolled='true'] .stickyLtp {
+  box-shadow:
+    inset 0 -1px 0 var(--row-line),
+    8px 0 10px -8px rgba(27, 36, 63, 0.22);
+}
+
+.scroller[data-scrolled='true'] .tail .stickyLtp {
+  box-shadow: 8px 0 10px -8px rgba(27, 36, 63, 0.22);
+}
+
+.symbol,
+.symbolHead {
+  padding-left: var(--pad-first);
+}
+
+.symbol {
+  padding-right: 4px;
+  font-size: var(--fs-symbol);
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+.company {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.57; /* 29px at desktop size: the line spacing of "Tata Consultancy / Services" */
+}
+
+.ltp {
+  font-size: var(--fs-ltp);
+  font-weight: 700;
+}
+
+.volume {
+  padding-left: calc(var(--pad-cell) + 6px);
+}
+
+/* Change % */
+.change,
+.changeHead {
+  padding-left: calc(var(--pad-cell) + 5px);
+}
+
+.change {
+  gap: 0.45em;
+  font-size: var(--fs-change);
+  font-weight: 500;
+}
+
+.up {
+  color: var(--color-positive);
+}
+
+.down {
+  color: var(--color-negative);
+}
+
+.flat {
+  color: var(--color-ink-soft);
+}
+
+.arrow {
+  width: 0.6em;
+  height: 0.5em;
+  flex: none;
+}
+
+.spacer {
+  padding: 0;
+}
+
+/* Sortable headings: the whole heading is the button, so it looks exactly like the reference. */
+.sortButton {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  font-weight: inherit;
+  text-align: left;
+  border-radius: 6px;
+}
+
+.sortButton:focus-visible {
+  outline-offset: -1px;
+}
+
+.sortButton:hover .sortIcon {
+  color: #7d83a8;
+}
+
+.sortIcon [data-arrow] {
+  transition: fill 120ms ease-out;
+}
+
+.sortIcon[data-direction='asc'] [data-arrow='asc'],
+.sortIcon[data-direction='desc'] [data-arrow='desc'] {
+  fill: var(--color-ink-soft);
+}
+
+.sortIcon[data-direction='asc'] [data-arrow='desc'],
+.sortIcon[data-direction='desc'] [data-arrow='asc'] {
+  fill: #d3d6e8;
+}
+
+/* The reference shows sort arrows beside three headings. */
+.sortIcon {
+  width: 10px;
+  height: 16px;
+  margin-left: auto;
+  margin-right: 13px;
+  flex: none;
+  color: var(--color-icon-muted);
+}
+
+/* Offsets copied from the reference, which places each arrow a little differently. */
+.ltpHead .sortIcon {
+  margin-right: 18px;
+}
+
+.changeHead .sortIcon {
+  margin-right: -2px;
+}
+
+.empty {
+  margin: 0;
+  padding: 28px var(--pad-first);
+  font-size: var(--fs-cell);
+  color: var(--color-ink-soft);
+}
+
+@media (max-width: 1099px) {
+  .ltpHead .sortIcon {
+    margin-right: 10px;
+  }
+
+  .changeHead .sortIcon {
+    margin-right: 6px;
+  }
+}
+
+@media (max-width: 639px) {
+  /* Long names get two lines, then an ellipsis, so narrow sticky columns stay tidy. */
+  .companyText {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.3;
+  }
+
+  .symbol {
+    padding-right: 4px;
+  }
+
+  .sortIcon,
+  .ltpHead .sortIcon,
+  .changeHead .sortIcon {
+    width: 8px;
+    height: 12px;
+    margin-right: 0;
+    margin-left: 6px;
+  }
+}
+
+/* Narrow phones: every pixel counts, so "Change %" drops its extra indent. */
+@media (max-width: 400px) {
+  .change,
+  .changeHead {
+    padding-left: var(--pad-cell);
+  }
+
+  .sortIcon,
+  .ltpHead .sortIcon,
+  .changeHead .sortIcon {
+    margin-left: 4px;
+  }
+}

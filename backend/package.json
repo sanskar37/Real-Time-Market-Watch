@@ -1,0 +1,60 @@
+{
+  "name": "@market-watch/backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NestJS market data simulation and WebSocket streaming service",
+  "scripts": {
+    "build": "nest build",
+    "start": "node --env-file-if-exists=.env dist/main.js",
+    "start:dev": "nest start --watch --exec \"node --env-file-if-exists=.env\"",
+    "test": "jest",
+    "test:cov": "jest --coverage"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.2.11",
+    "@nestjs/core": "^11.2.11",
+    "@nestjs/platform-express": "^11.2.11",
+    "@nestjs/platform-ws": "^11.2.11",
+    "@nestjs/websockets": "^11.2.11",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "ws": "^8.23.0"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.24",
+    "@nestjs/schematics": "^11.1.0",
+    "@nestjs/testing": "^11.2.11",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.6.6",
+    "@types/ws": "^8.18.2",
+    "jest": "^30.5.2",
+    "ts-jest": "^29.4.15",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "jest": {
+    "rootDir": ".",
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "testRegex": "(src|test)/.*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.ts$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.spec.json"
+        }
+      ]
+    },
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/main.ts"
+    ]
+  }
+}
